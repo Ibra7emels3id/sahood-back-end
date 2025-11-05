@@ -1,5 +1,6 @@
 const Safe = require("../model/Safe");
 const OutBooking = require("../model/OutBooking");
+const { sendWhatsAppMessage } = require("../Config/Twilio");
 
 const AddOutBooking = async (req, res) => {
     try {
@@ -156,7 +157,7 @@ const DeleteOutBooking = async (req, res) => {
 
 const GetOutBookings = async (req, res) => {
     try {
-        const outBookings = await OutBooking.find();
+        const outBookings = await OutBooking.find().sort({ createdAt: -1 });
         res.status(200).json({ outBookings });
     } catch (error) {
         console.error("❌ Error in GetOutBookings:", error);
@@ -172,7 +173,7 @@ const GetByUid = async (req, res) => {
         console.error("❌ Error in GetByUid:", error);
         res.status(500).json({ message: error.message, stack: error.stack });
     }
-};  
+};
 
 
 

@@ -1,8 +1,7 @@
 const apiKey = process.env.REACT_APP_API_KEY_TWILIO;
-import axios from "axios";
+const axios = require("axios");
 
-
-export const sendWhatsAppMessage = async (customerPhone, bookingData, ticketNumber) => {
+const sendWhatsAppMessage = async (customerPhone, bookingData, ticketNumber) => {
     try {
         const response = await axios.post(
             "https://wasenderapi.com/api/send-message",
@@ -57,3 +56,5 @@ export const sendWhatsAppMessage = async (customerPhone, bookingData, ticketNumb
         );
     }
 };
+
+module.exports = { sendWhatsAppMessage };
