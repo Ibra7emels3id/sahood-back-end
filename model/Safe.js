@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 
 const SafeSchema = new mongoose.Schema({
     name: { type: String, default: "Safe" },
@@ -76,4 +76,5 @@ const SafeSchema = new mongoose.Schema({
 });
 
 const Safe = mongoose.model("Safe", SafeSchema);
-export default Safe;
+
+module.exports = Safe;

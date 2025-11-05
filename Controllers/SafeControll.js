@@ -1,4 +1,4 @@
-const { default: Safe } = require("../model/Safe");
+const Safe = require("../model/Safe");
 
 // Add Transaction Controller Safe 
 const AddReceiptTheSafe = async (req, res) => {

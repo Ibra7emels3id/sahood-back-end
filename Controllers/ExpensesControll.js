@@ -1,5 +1,5 @@
 const Expenses = require("../model/Expenses");
-const { default: Safe } = require("../model/Safe");
+const Safe = require("../model/Safe");
 
 // Add Expenses Controller
 const AddExpensesController = async (req, res) => {

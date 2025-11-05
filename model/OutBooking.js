@@ -1,4 +1,5 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
+
 
 const OutBookingSchema = new mongoose.Schema({
     name: { type: String, default: "" },
@@ -35,4 +36,5 @@ const OutBookingSchema = new mongoose.Schema({
 });
 
 const OutBooking = mongoose.model("OutBooking", OutBookingSchema);
-export default OutBooking;
+
+module.exports = OutBooking;

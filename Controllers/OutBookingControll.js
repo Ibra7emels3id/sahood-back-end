@@ -1,8 +1,7 @@
-import { sendWhatsAppMessage } from "../Config/Twilio.js";
-import OutBooking from "../model/OutBooking.js";
-import Safe from "../model/Safe.js";
+const Safe = require("../model/Safe");
+const OutBooking = require("../model/OutBooking");
 
-export const AddOutBooking = async (req, res) => {
+const AddOutBooking = async (req, res) => {
     try {
         const outBook = new OutBooking(req.body);
         await outBook.save();
@@ -72,7 +71,7 @@ export const AddOutBooking = async (req, res) => {
 };
 
 // Canceled OutBooking
-export const CancelOutBooking = async (req, res) => {
+const CancelOutBooking = async (req, res) => {
     try {
         const outBook = await OutBooking.findById(req.params.id);
         if (!outBook) return res.status(404).json({ message: "OutBooking not found" });
@@ -112,7 +111,7 @@ export const CancelOutBooking = async (req, res) => {
 };
 
 // Delete OutBooking
-export const DeleteOutBooking = async (req, res) => {
+const DeleteOutBooking = async (req, res) => {
     try {
         const outBook = await OutBooking.findById(req.params.id);
         if (!outBook) return res.status(404).json({ message: "OutBooking not found" });
@@ -155,7 +154,7 @@ export const DeleteOutBooking = async (req, res) => {
 };
 
 
-export const GetOutBookings = async (req, res) => {
+const GetOutBookings = async (req, res) => {
     try {
         const outBookings = await OutBooking.find();
         res.status(200).json({ outBookings });
@@ -165,7 +164,7 @@ export const GetOutBookings = async (req, res) => {
     }
 };
 
-export const GetByUid = async (req, res) => {
+const GetByUid = async (req, res) => {
     try {
         const outBookings = await OutBooking.find({ uid: req.params.uid }).sort({ createdAt: -1 });
         res.status(200).json({ outBookings });
@@ -174,3 +173,8 @@ export const GetByUid = async (req, res) => {
         res.status(500).json({ message: error.message, stack: error.stack });
     }
 };  
+
+
+
+// Export
+module.exports = { AddOutBooking, GetOutBookings, GetByUid, CancelOutBooking, DeleteOutBooking };

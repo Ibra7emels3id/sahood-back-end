@@ -16,7 +16,7 @@ connectDB();
 const AllProducts = require('./Router/ProductRouter.js');
 const RouterExpenses = require('./Router/ExpensesRouter.js');
 const SafeRouter = require('./Router/SafeRouter.js');
-const { default: OutBookingRouter } = require('./Router/OutBookingRouter.js');
+const OutBookingRouter = require('./Router/OutBookingRouter.js');
 
 // Middlewares
 app.use(cors());

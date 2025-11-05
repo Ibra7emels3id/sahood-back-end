@@ -1,7 +1,6 @@
-const { sendTicketDetails, sendWhatsAppMessage } = require("../Config/Twilio");
-const { default: Product } = require("../model/Product");
-const { default: Safe } = require("../model/Safe");
-const { AddTransactionController } = require("./SafeControll");
+const { sendWhatsAppMessage } = require("../Config/Twilio");
+const Product = require("../model/Product");
+const Safe = require("../model/Safe");
 
 // Create Bus Model
 const AddToProductController = async (req, res) => {

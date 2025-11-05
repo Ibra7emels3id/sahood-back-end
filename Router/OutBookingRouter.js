@@ -1,5 +1,5 @@
-import express from "express";
-import { AddOutBooking, CancelOutBooking, DeleteOutBooking, GetByUid, GetOutBookings } from "../Controllers/OutBookingControll.js";
+const express = require("express");
+const { AddOutBooking, GetOutBookings, GetByUid, CancelOutBooking, DeleteOutBooking } = require("../Controllers/OutBookingControll");
 const OutBookingRouter = express.Router();
 
 
@@ -9,4 +9,4 @@ OutBookingRouter.get("/account/out-bookings/:uid", GetByUid);
 OutBookingRouter.put("/out-booking-cancel/:uid/:id", CancelOutBooking);
 OutBookingRouter.delete("/out-booking-delete/:id/:uid", DeleteOutBooking);
 
-export default OutBookingRouter;
+module.exports = OutBookingRouter;

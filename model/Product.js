@@ -1,5 +1,4 @@
-import mongoose from "mongoose";
-
+const mongoose = require("mongoose");
 
 // Passenger Schema
 const passengerSchema = new mongoose.Schema({
@@ -109,5 +108,5 @@ const ProductSchema = new mongoose.Schema({
 
 // Export the model
 const Product = mongoose.model("Product", ProductSchema);
-export default Product;
 
+module.exports = Product;
