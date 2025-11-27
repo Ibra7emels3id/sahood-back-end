@@ -35,6 +35,11 @@ const ExpensesSchema = new mongoose.Schema({
         required: true,
         default: "cash",
         enum: ["cash", "bank"]
+    },
+    nots: {
+        type: String,
+        default: "",
+        required: false
     }
 });
 

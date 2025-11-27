@@ -32,7 +32,7 @@ const OutBookingSchema = new mongoose.Schema({
         required: true,
         default: "cash",
         enum: ["cash", "bank"]
-    }
+    },
 });
 
 const OutBooking = mongoose.model("OutBooking", OutBookingSchema);
