@@ -17,6 +17,11 @@ const SafeSchema = new mongoose.Schema({
                 required: true,
                 default: "deposit"
             },
+            BondType:{
+                type: String,
+                required: false,
+                enum: ["inbound" , "outbound"], 
+            },
             amount: {
                 type: Number,
                 required: true

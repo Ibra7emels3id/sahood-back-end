@@ -4,19 +4,36 @@ const Safe = require("../model/Safe");
 // Add Expenses Controller
 const AddExpensesController = async (req, res) => {
     try {
-        const expenses = new Expenses(req.body);
-        await expenses.save();
-
-        // Get Safe
-        let safe = await Safe.findOne({ uid: req.body.uid });
-
-        // Get Expense Amount
         const expenseAmount = Number(req.body.totalExpenses) || 0;
         const isCash = req.body.PaymentType === "cash";
         const isBank = req.body.PaymentType === "bank";
 
-        // Set Data Safe
+        // Get Safe
+        let safe = await Safe.findOne({ uid: req.body.uid });
+
+        // CHECK BALANCE BEFORE ADDING EXPENSES
+        if (safe) {
+            if (safe.balance - expenseAmount < 0) {
+                return res.status(400).json({ message: "الرصيد الإجمالي في الخزنة غير كافي" });
+            }
+            if (isCash && safe.cash - expenseAmount < 0) {
+                return res.status(400).json({ message: "الرصيد في الكاش غير كافي" });
+            }
+            if (isBank && safe.bank - expenseAmount < 0) {
+                return res.status(400).json({ message: "الرصيد في البنك غير كافي" });
+            }
+        } else {
+            if (expenseAmount > 0) {
+                return res.status(400).json({ message: "لا يوجد خزنة لهذا المكتب، الرصيد غير كافي" });
+            }
+        }
+
+        // Create Expenses
+        const expenses = new Expenses(req.body);
+        await expenses.save();
+
         if (!safe) {
+            // CREATE NEW Safe IF NOT EXISTS
             safe = new Safe({
                 name: req.body.OfficeName,
                 uid: req.body.uid,
@@ -33,14 +50,12 @@ const AddExpensesController = async (req, res) => {
                         description: "تم إضافة المصروف بنجاح",
                         OfficeName: req.body.OfficeName,
                         PaymentType: req.body.PaymentType,
-                        createdAt: new Date(),
-                        PaymentType: req.body.PaymentType
+                        createdAt: new Date()
                     },
                 ],
             });
-            await safe.save();
         } else {
-            // change balance
+            // UPDATE EXISTING Safe
             safe.balance -= expenseAmount;
             if (isCash) safe.cash -= expenseAmount;
             if (isBank) safe.bank -= expenseAmount;
@@ -53,16 +68,19 @@ const AddExpensesController = async (req, res) => {
                 description: "تم إضافة المصروف بنجاح",
                 OfficeName: req.body.OfficeName,
                 PaymentType: req.body.PaymentType,
-                createdAt: new Date(),
-                PaymentType: req.body.PaymentType
+                createdAt: new Date()
             });
-            await safe.save();
         }
+
+        await safe.save();
         res.status(201).json({ message: "تم إضافة المصروف بنجاح", expenses });
+
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
 };
+
+
 
 
 // Get Expenses Controller
